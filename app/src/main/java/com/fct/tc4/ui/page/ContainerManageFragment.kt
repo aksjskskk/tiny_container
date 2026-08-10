@@ -482,24 +482,24 @@ private class ContainerCardViewHolder(
 
                 // Toggle visibility of LibreOffice single-app launcher layout
                 if (item.code == "libreoffice") {
-                    binding.libreofficeLauncherLayout.visibility = View.VISIBLE
-                    binding.btnLaunchWriter.setOnClickListener {
+                    binding.libreofficeLauncherLayout?.visibility = View.VISIBLE
+                    binding.btnLaunchWriter?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
                         MainViewModel.pendingCommandText = "libreoffice --writer"
                         onLaunch(item.code)
                     }
-                    binding.btnLaunchCalc.setOnClickListener {
+                    binding.btnLaunchCalc?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
                         MainViewModel.pendingCommandText = "libreoffice --calc"
                         onLaunch(item.code)
                     }
-                    binding.btnLaunchImpress.setOnClickListener {
+                    binding.btnLaunchImpress?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
                         MainViewModel.pendingCommandText = "libreoffice --impress"
                         onLaunch(item.code)
                     }
                 } else {
-                    binding.libreofficeLauncherLayout.visibility = View.GONE
+                    binding.libreofficeLauncherLayout?.visibility = View.GONE
                 }
 
                 // 加载预览图
