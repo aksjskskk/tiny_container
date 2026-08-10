@@ -257,8 +257,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onNormalLaunch() {
         // Mock a container if none exist so the user can immediately preview the UI design in the cloud build
-        if (Global.installedContainers.isEmpty()) {
-            val mockCode = "libreoffice"
+        val mockCode = "libreoffice"
+        val containerDir = File(application.dataDir, mockCode)
+        val configFile = File(containerDir, ".tiny.yaml")
+
+        if (Global.installedContainers.isEmpty() || !configFile.exists() || !configFile.readText().contains("boot_command")) {
             Global.installedContainers = setOf(mockCode)
 
             // Create a fake .tiny.yaml configuration
@@ -269,10 +272,10 @@ class MainActivity : AppCompatActivity() {
                     description: "Pre-configured LibreOffice single-app kiosk workspace"
                     version: "26.2"
                     preview: ""
+                    boot_command: "echo 'Launching LibreOffice Kiosk...'"
                 """.trimIndent()
-                val containerDir = File(application.dataDir, mockCode)
                 containerDir.mkdirs()
-                File(containerDir, ".tiny.yaml").writeText(mockYaml)
+                configFile.writeText(mockYaml)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
