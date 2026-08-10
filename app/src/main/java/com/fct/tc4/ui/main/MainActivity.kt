@@ -256,6 +256,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onNormalLaunch() {
+        // Mock a container if none exist so the user can immediately preview the UI design in the cloud build
+        if (Global.installedContainers.isEmpty()) {
+            val mockCode = "libreoffice"
+            Global.installedContainers = setOf(mockCode)
+
+            // Create a fake .tiny.yaml configuration
+            try {
+                val mockYaml = """
+                    code: "libreoffice"
+                    name: "LibreOffice-Kiosk"
+                    description: "Pre-configured LibreOffice single-app kiosk workspace"
+                    version: "26.2"
+                    preview: ""
+                """.trimIndent()
+                val containerDir = File(application.dataDir, mockCode)
+                containerDir.mkdirs()
+                File(containerDir, ".tiny.yaml").writeText(mockYaml)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
         // 已完成初始导航，不再重复导航（singleTask 下 onNewIntent 可能再次触发 ACTION_MAIN）
         if (viewModel.screen.value !is MainViewModel.Screen.Init) return
 
