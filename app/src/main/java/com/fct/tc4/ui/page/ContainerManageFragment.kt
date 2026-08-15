@@ -485,17 +485,17 @@ private class ContainerCardViewHolder(
                     binding.libreofficeLauncherLayout?.visibility = View.VISIBLE
                     binding.btnLaunchWriter?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
-                        MainViewModel.pendingCommandText = "libreoffice --writer"
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --writer; pkill -9 -f vnc || pkill -9 -f xfce'"
                         onLaunch(item.code)
                     }
                     binding.btnLaunchCalc?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
-                        MainViewModel.pendingCommandText = "libreoffice --calc"
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --calc; pkill -9 -f vnc || pkill -9 -f xfce'"
                         onLaunch(item.code)
                     }
                     binding.btnLaunchImpress?.setOnClickListener {
                         MainViewModel.pendingCommandCode = item.code
-                        MainViewModel.pendingCommandText = "libreoffice --impress"
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --impress; pkill -9 -f vnc || pkill -9 -f xfce'"
                         onLaunch(item.code)
                     }
                 } else {
