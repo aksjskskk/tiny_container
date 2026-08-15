@@ -480,6 +480,28 @@ private class ContainerCardViewHolder(
                     "${item.code} - ${itemView.context.getString(R.string.tc4_container_calculating_space)}"
                 else "${item.code} - ${formatBytes(item.spaceBytes)}"
 
+                // Toggle visibility of LibreOffice single-app launcher layout
+                if (item.code == "libreoffice") {
+                    binding.libreofficeLauncherLayout?.visibility = View.VISIBLE
+                    binding.btnLaunchWriter?.setOnClickListener {
+                        MainViewModel.pendingCommandCode = item.code
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --writer; pkill -9 -f vnc || pkill -9 -f xfce'"
+                        onLaunch(item.code)
+                    }
+                    binding.btnLaunchCalc?.setOnClickListener {
+                        MainViewModel.pendingCommandCode = item.code
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --calc; pkill -9 -f vnc || pkill -9 -f xfce'"
+                        onLaunch(item.code)
+                    }
+                    binding.btnLaunchImpress?.setOnClickListener {
+                        MainViewModel.pendingCommandCode = item.code
+                        MainViewModel.pendingCommandText = "sh -c 'libreoffice --impress; pkill -9 -f vnc || pkill -9 -f xfce'"
+                        onLaunch(item.code)
+                    }
+                } else {
+                    binding.libreofficeLauncherLayout?.visibility = View.GONE
+                }
+
                 // 加载预览图
                 if (item.image.isNotBlank()) {
                     val dataDir = itemView.context.applicationContext.let { ctx ->
